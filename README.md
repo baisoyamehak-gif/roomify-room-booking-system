@@ -1,175 +1,119 @@
-# Room & Lab Booking Management System
+🚀 Roomify - Room & Lab Booking Management System
 
-A full-stack application with a React frontend and Node.js/Express backend, organized as a monorepo.
+Roomify is a full-stack web application designed to streamline room and laboratory booking processes within educational institutions and organizations. The platform enables users to request bookings, approvers to review requests, and administrators to manage resources efficiently through a centralized dashboard.
 
-## Project Structure
+📌 Overview
 
-```
-├── frontend/                  # React + Vite + Tailwind CSS
-│   ├── src/
-│   │   ├── components/       # Reusable UI components
-│   │   │   ├── layout/       # Sidebar, Navbar, DashboardLayout
-│   │   │   └── common/       # Button, Input, Card, Loader
-│   │   ├── pages/            # Page components
-│   │   │   ├── auth/         # Login
-│   │   │   ├── admin/        # AdminDashboard, ManageUsers, ManageRooms
-│   │   │   ├── approver/     # ApproverDashboard, BookingRequests
-│   │   │   └── requester/   # RequesterDashboard, SearchRooms, MyBookings
-│   │   ├── context/          # AuthContext
-│   │   ├── services/         # API service
-│   │   └── routes/          # ProtectedRoute
-│   ├── public/              # Static assets
-│   ├── index.html
-│   ├── package.json
-│   ├── vite.config.js
-│   └── tailwind.config.js
+Managing room and laboratory reservations manually often leads to scheduling conflicts, approval delays, and poor resource utilization. Roomify provides a digital solution with role-based access control, automated workflows, and real-time booking management.
+
+✨ Key Features
+🔐 Authentication & Authorization
+Secure JWT-based authentication
+Role-Based Access Control (RBAC)
+Separate dashboards for Admin, Approver, and Requester
+
+🏢 Room & Lab Management
+Create and manage rooms/laboratories
+View room availability
+Search and filter resources
+Manage room details and capacity
+
+📅 Booking Management
+Submit booking requests
+Approval/Rejection workflow
+Booking history tracking
+Schedule visualization
+
+👨‍💼 Admin Panel
+User management
+Room management
+Booking oversight
+Bulk room uploads
+Dashboard analytics
+
+🔔 Notifications
+Booking status updates
+Approval notifications
+Upcoming booking reminders
+
+📱 Modern User Experience
+Responsive design
+Clean dashboard interface
+Mobile-friendly layouts
+Fast and intuitive navigation
+
+🛠️ Technology Stack
+Frontend
+React.js
+Vite
+Tailwind CSS
+React Router DOM
+Context API
+Backend
+Node.js
+Express.js
+MongoDB Atlas
+Mongoose
+JWT Authentication
+Deployment
+GitHub
+Render (Backend)
+Vercel (Frontend)
+
+📂 Project Architecture
+Roomify
 │
-├── backend/                   # Node.js + Express + MongoDB
-│   ├── config/               # Database connection (db.js)
-│   ├── controllers/          # Business logic
-│   ├── models/              # Mongoose schemas (User, Room, Booking)
-│   ├── routes/              # API routes
-│   ├── middleware/         # Auth & validation
-│   ├── utils/              # Helpers & seeder
-│   ├── app.js              # Express app setup
-│   ├── server.js           # Server entry point
-│   ├── package.json
-│   └── .env                 # Environment variables
-│
-├── package.json              # Root monorepo config (npm workspaces)
-├── .env.example             # Example environment variables
-├── MONGODB_SETUP.md         # MongoDB Atlas setup guide
-└── README.md
-```
+├── frontend/          # React Application
+├── backend/           # Express API Server
+├── README.md
+├── package.json
+└── .gitignore
 
----
+🔄 System Workflow
+User logs into the system.
+Requester submits a room/lab booking request.
+Approver reviews the request.
+Booking is approved or rejected.
+Notifications are sent to relevant users.
+Admin monitors bookings and resources through the dashboard.
 
-## Quick Start
+Login Page
 
-### Prerequisites
-- Node.js 18+
-- MongoDB Atlas account (see [MONGODB_SETUP.md](MONGODB_SETUP.md))
+![alt text](image.png)
 
-### 1. Clone and Install
+Requester Dashboard
 
-```bash
-# Install all dependencies (frontend + backend)
-npm run install:all
-```
+![alt text](image-2.png)
 
-### 2. Configure MongoDB Atlas
+Admin Dashboard
 
-1. Follow the guide in [MONGODB_SETUP.md](MONGODB_SETUP.md)
-2. Update `backend/.env` with your connection string:
+![alt text](image-1.png)
 
-```env
-PORT=5000
-MONGO_URI=mongodb+srv://<username>:<password>@<cluster>.lbuku8g.mongodb.net/<dbname>
-JWT_SECRET=your-super-secret-jwt-key-change-in-production
-JWT_EXPIRE=7d
-NODE_ENV=development
-```
 
-### 3. Seed the Database (First Time Only)
+⚙️ Installation & Setup
+Clone Repository
+git clone https://github.com/baisoyamehak-gif/roomify-room-booking-system.git
+cd roomify-room-booking-system
 
-```bash
+Backend Setup
 cd backend
-npm run seed
-```
+npm install
+npm start
 
-### 4. Run the Application
-
-**Option A - Run both simultaneously:**
-```bash
+Frontend Setup
+cd frontend
+npm install
 npm run dev
-```
-This runs both frontend (port 3000) and backend (port 5000) with `concurrently`.
 
-**Option B - Run separately:**
-
-Terminal 1 (Backend):
-```bash
-npm run dev:backend
-# Server runs on http://localhost:5000
-```
-
-Terminal 2 (Frontend):
-```bash
-npm run dev:frontend
-# App runs on http://localhost:3000
-```
-
----
-
-## Demo Credentials
-
-After running `npm run seed`:
-
-| Role | Email | Password |
-|------|-------|----------|
-| Admin | admin@university.edu | admin123 |
-| Approver | approver@university.edu | approver123 |
-| Requester | requester@university.edu | requester123 |
-
----
-
-## API Endpoints
-
-### Auth
-- `POST /api/auth/login` - Login
-- `POST /api/auth/register` - Register (admin only)
-- `GET /api/auth/me` - Get current user
-
-### Users (Admin only)
-- `GET /api/users` - List all users
-- `POST /api/users` - Create user
-- `PUT /api/users/:id` - Update user
-- `DELETE /api/users/:id` - Delete user
-- `PATCH /api/users/:id/block` - Block user
-- `PATCH /api/users/:id/unblock` - Unblock user
-
-### Rooms (Admin only)
-- `GET /api/rooms` - List all rooms
-- `POST /api/rooms` - Create room
-- `PUT /api/rooms/:id` - Update room
-- `DELETE /api/rooms/:id` - Delete room
-- `PATCH /api/rooms/:id/status` - Toggle room status
-
-### Bookings
-- `POST /api/bookings` - Create booking (requester)
-- `GET /api/bookings/my` - My bookings (requester)
-- `GET /api/bookings/pending` - Pending requests (approver)
-- `PATCH /api/bookings/:id/approve` - Approve (approver)
-- `PATCH /api/bookings/:id/reject` - Reject (approver)
-- `GET /api/bookings/all` - All bookings (admin)
-
----
-
-## Environment Variables
-
-### Backend (`backend/.env`)
-```env
+🔑 Environment Variables
+Backend (.env)
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_secret_key
 PORT=5000
-MONGO_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/<dbname>
-JWT_SECRET=<your-secret-key>
-JWT_EXPIRE=7d
-NODE_ENV=development
-```
+Frontend (.env)
+VITE_API_URL=your_backend_api_url
 
-### Frontend (`frontend/.env`) - Optional
-```env
-VITE_API_URL=/api
-```
+👩‍💻 Author
 
----
-
-## Features
-
-- **JWT Authentication** with role-based access control
-- **Admin Panel**: Manage users, rooms, view all bookings
-- **Approver Panel**: Review and approve/reject booking requests
-- **Requester Panel**: Search rooms, create bookings, view own bookings
-- **Conflict Prevention**: Prevents double booking of same room/time slot
-- **Input Validation**: All inputs validated using express-validator
-- **Password Security**: Hashed with bcrypt (12 rounds)
-- **Vite Proxy**: API requests proxied to backend during development
+Mehak Baisoya
+MCA Student | Full Stack Developer
