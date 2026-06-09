@@ -1,0 +1,87 @@
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import ProtectedRoute from './routes/ProtectedRoute';
+
+import Login from './pages/auth/Login';
+import DashboardLayout from './components/layout/DashboardLayout';
+
+import AdminDashboard from './pages/admin/AdminDashboard';
+import ManageUsers from './pages/admin/ManageUsers';
+import AdminBulkUpload from './pages/admin/AdminBulkUpload';
+import AdminBookingsView from './pages/admin/AdminBookingsView';
+import AdminRoomsView from './pages/admin/AdminRoomsView';
+import AdminScheduleView from './pages/admin/AdminScheduleView';
+
+import ApproverDashboard from './pages/approver/ApproverDashboard';
+import ApproverRooms from './pages/approver/ApproverRooms';
+import BookingRequests from './pages/approver/BookingRequests';
+import ApproverScheduleView from './pages/approver/ApproverScheduleView';
+
+import RequesterDashboard from './pages/requester/RequesterDashboard';
+import SearchRooms from './pages/requester/SearchRooms';
+import MyBookings from './pages/requester/MyBookings';
+import RequesterScheduleView from './pages/requester/RequesterScheduleView';
+
+function App() {
+  return (
+    <AuthProvider>
+  <BrowserRouter>
+    <Routes>
+    <Route path="/login" element={<Login />} />
+
+           {/* Admin Routes */}
+      <Route
+          path="/admin"
+      element={
+<ProtectedRoute allowedRoles={['admin']}>
+          <DashboardLayout />
+      </ProtectedRoute>
+      }
+      >
+          <Route index element={<AdminDashboard />} />
+        <Route path="users" element={<ManageUsers />} />
+        <Route path="bulk-upload" element={<AdminBulkUpload />} />
+      <Route path="bookings" element={<AdminBookingsView />} />
+  <Route path="rooms" element={<AdminRoomsView />} />
+<Route path="schedule" element={<AdminScheduleView />} />
+    </Route>
+
+           {/* Approver Routes */}
+      <Route
+      path="/approver"
+        element={
+      <ProtectedRoute allowedRoles={['approver']}>
+          <DashboardLayout />
+          </ProtectedRoute>
+  }
+    >
+        <Route index element={<ApproverDashboard />} />
+          <Route path="rooms" element={<ApproverRooms />} />
+    <Route path="requests" element={<BookingRequests />} />
+      <Route path="schedule" element={<ApproverScheduleView />} />
+    </Route>
+
+           {/* Requester Routes */}
+          <Route
+          path="/requester"
+    element={
+  <ProtectedRoute allowedRoles={['requester']}>
+          <DashboardLayout />
+      </ProtectedRoute>
+            }
+  >
+  <Route index element={<RequesterDashboard />} />
+      <Route path="search" element={<SearchRooms />} />
+      <Route path="bookings" element={<MyBookings />} />
+      <Route path="schedule" element={<RequesterScheduleView />} />
+        </Route>
+
+    <Route path="/" element={<Navigate to="/login" replace />} />
+      <Route path="*" element={<Navigate to="/login" replace />} />
+    </Routes>
+    </BrowserRouter>
+  </AuthProvider>
+);
+}
+
+export default App;

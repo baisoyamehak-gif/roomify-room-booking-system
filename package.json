@@ -1,0 +1,22 @@
+{
+  "name": "claudelogbook",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Room & Lab Booking Management System",
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:frontend": "npm run dev -w frontend",
+    "dev:backend": "npm run dev -w backend",
+    "build": "npm run build -w frontend",
+    "start": "npm run start -w backend",
+    "install:all": "npm install && npm install -w frontend && npm install -w backend",
+    "lint": "npm run lint -w frontend"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
